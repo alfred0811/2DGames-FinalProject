@@ -18,7 +18,7 @@ Player::~Player()
 
 void Player::Load()
 {
-	mImageId = X::LoadTexture("stone.png");
+	mImageId = X::LoadTexture("Walk3_Right.png");
 
 	const Tile* safeTile = TileMap::Get()->GetFirstWalkableTile();
 	mPosition = safeTile->GetPosition();

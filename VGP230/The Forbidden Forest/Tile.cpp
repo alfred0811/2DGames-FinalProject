@@ -17,15 +17,16 @@ void Tile::Load()
 {
 	switch (mTileType)
 	{
-	case TT_GROUND: mImageId = X::LoadTexture("green.jpg"); break;
-	case TT_WALL: mImageId = X::LoadTexture("purple.jpg"); break;
+	case TT_GROUND: mImageId = X::LoadTexture("Grass (2).png"); break;
+	case TT_WALL: mImageId = X::LoadTexture("Tree.png"); break;
 	case TT_WATER: mImageId = X::LoadTexture("cyan.jpg"); break;
+	case TT_GROUND2: mImageId = X::LoadTexture("Flowers.png"); break;
 	case TT_NONE:
 		XASSERT(false, "Tile type is none!");
 	}
 
 	float halfWidth = X::GetSpriteWidth(mImageId) * 0.5f;
-	float halfHeight = X::GetSpriteWidth(mImageId) * 0.5f;
+	float halfHeight = X::GetSpriteHeight(mImageId) * 0.5f;
 	mRect.left = mPosition.x - halfWidth;
 	mRect.right = mPosition.x + halfWidth;
 	mRect.top = mPosition.y - halfHeight;

@@ -53,6 +53,9 @@
     <None Include="level.lvl">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="xconfig.json">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collidable.h">

@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="level.lvl" />
+    <None Include="xconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collidable.h" />

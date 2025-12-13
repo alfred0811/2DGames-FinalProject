@@ -16,5 +16,6 @@ enum TileType : int
 	TT_NONE	= 0,	// 0.......0000
 	TT_GROUND,
 	TT_WALL,
-	TT_WATER
+	TT_WATER,
+	TT_GROUND2
 };
