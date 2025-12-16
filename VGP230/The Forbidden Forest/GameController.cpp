@@ -64,3 +64,13 @@ void GameController::Unload()
 	mPlayer.Unload();
 	CollisionManager::Get()->Unload();
 }
+
+bool GameController::IsGameOver() const
+{
+	return mPlayer.IsDead();
+}
+
+int GameController::GetPlayerHealth() const
+{
+	return mPlayer.GetHealth();
+}

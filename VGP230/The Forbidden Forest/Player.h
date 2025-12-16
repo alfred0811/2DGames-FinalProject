@@ -24,6 +24,8 @@ public:
 	void SetPosition(const X::Math::Vector2& position);
 	void SetVelocity(const X::Math::Vector2& velocity);
 	const X::Math::Vector2& GetVelocity() const;
+	int GetHealth() const;
+	bool IsDead() const;
 
 private:
 	X::TextureId mImageId;

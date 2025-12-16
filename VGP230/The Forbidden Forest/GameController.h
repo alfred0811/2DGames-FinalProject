@@ -15,6 +15,9 @@ public:
 	void Render() override;
 	void Unload() override;
 
+	bool IsGameOver() const;
+	int GetPlayerHealth() const;
+
 private:
 	GameController();
 	static GameController* mInstance;

@@ -2,7 +2,7 @@
 
 #include "GameState.h"
 
-class Game;
+class GameController;
 
 class RunGameState : public GameState
 {
@@ -18,5 +18,6 @@ public:
 	int GetFinalScore() const;
 
 private:
-	Game* mGame;
+	GameController* mGameController;
+	float mElapsedTime;
 };

@@ -19,6 +19,7 @@ Player::~Player()
 void Player::Load()
 {
 	mImageId = X::LoadTexture("Walk3_Right.png");
+	mHealth = 100;
 
 	const Tile* safeTile = TileMap::Get()->GetFirstWalkableTile();
 	mPosition = safeTile->GetPosition();
@@ -153,4 +154,14 @@ void Player::SetVelocity(const X::Math::Vector2& velocity)
 const X::Math::Vector2& Player::GetVelocity() const
 {
 	return mVelocity;
+}
+
+int Player::GetHealth() const
+{
+	return mHealth;
+}
+
+bool Player::IsDead() const
+{
+	return mHealth <= 0;
 }
