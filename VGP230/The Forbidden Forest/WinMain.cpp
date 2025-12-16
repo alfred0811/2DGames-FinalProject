@@ -1,6 +1,14 @@
 #include <XEngine.h>
 #include "GameController.h"
+#include "StartState.h"
+#include "RunGameState.h"
+#include "EndState.h"
 
+State gActiveState = State::Start;
+GameState* gCurrentGameState = nullptr;
+std::map<State, GameState*> gGameStates;
+
+// Game Setup
 void GameInit()
 {
 	GameController::Get()->Load();

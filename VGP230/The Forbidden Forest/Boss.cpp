@@ -41,7 +41,7 @@ int Boss::GetType() const
 
 const X::Math::Vector2& Boss::GetPosition() const
 {
-	
+	return mPosition;
 }
 
 void Boss::OnCollision(Collidable* collidable)
