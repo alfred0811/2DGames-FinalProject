@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "Collidable.h"
+#include "AnimSeperateImages.h"
 
 class Player : public Entity, public Collidable
 {
@@ -28,10 +29,37 @@ public:
 	bool IsDead() const;
 
 private:
+	enum class AnimState
+	{
+		IdleRight,
+		IdleLeft,
+		IdleUp,
+		IdleDown,
+		WalkRight,
+		WalkLeft,
+		WalkUp,
+		WalkDown
+	};
+
+	void SetAnimState(AnimState newState);
+
 	X::TextureId mImageId;
 	X::Math::Vector2 mPosition;
 	X::Math::Vector2 mVelocity;
 	X::Math::Rect mPlayerRect;
 	int mHealth;
 	bool mRemoveCollider;
+
+	// Animation members
+	AnimSeperateImages mIdleRight;
+	AnimSeperateImages mIdleLeft;
+	AnimSeperateImages mIdleUp;
+	AnimSeperateImages mIdleDown;
+	AnimSeperateImages mWalkRight;
+	AnimSeperateImages mWalkLeft;
+	AnimSeperateImages mWalkUp;
+	AnimSeperateImages mWalkDown;
+	AnimSeperateImages* mCurrentAnim;
+	AnimState mAnimState;
+	bool mFacingRight;
 };

@@ -1,7 +1,7 @@
 {
   "AppName": "The Forbidden Forest",
   "WinWidth": 1280,
-  "WinHeight": 720,
+  "WinHeight": 640,
   "FullScreen": false,
   "TexturePath": "../../Assets/Images",
   "SoundPath":  "../../Assets/Sounds"

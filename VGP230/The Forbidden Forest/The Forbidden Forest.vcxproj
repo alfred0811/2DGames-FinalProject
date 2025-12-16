@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimSeperateImages.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Collidable.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -149,6 +150,7 @@
     <None Include="xconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimSeperateImages.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Collidable.h" />
     <ClInclude Include="CollisionManager.h" />

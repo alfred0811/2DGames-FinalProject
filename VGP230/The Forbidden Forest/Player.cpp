@@ -9,6 +9,9 @@ Player::Player()
 	, mPosition(0.0f, 0.0f)
 	, mHealth(100)
 	, mRemoveCollider(false)
+	, mCurrentAnim(nullptr)
+	, mAnimState(AnimState::IdleRight)
+	, mFacingRight(true)
 {
 }
 
@@ -31,11 +34,156 @@ void Player::Load()
 	mPlayerRect.top = -halfHeight;
 	mPlayerRect.bottom = halfHeight;
 
+	// Load Idle Animations
+	std::vector<std::string> idleRightFrames =
+	{
+		"IdleRight01.png",
+		"IdleRight02.png",
+		"IdleRight03.png",
+		"IdleRight04.png",
+		"IdleRight05.png",
+		"IdleRight06.png",
+		"IdleRight07.png",
+		"IdleRight08.png",
+		"IdleRight09.png",
+		"IdleRight10.png",
+		"IdleRight11.png",
+		"IdleRight12.png"
+	};
+	std::vector<std::string> idleLeftFrames =
+	{
+		"IdleLeft01.png",
+		"IdleLeft02.png",
+		"IdleLeft03.png",
+		"IdleLeft04.png",
+		"IdleLeft05.png",
+		"IdleLeft06.png",
+		"IdleLeft07.png",
+		"IdleLeft08.png",
+		"IdleLeft09.png",
+		"IdleLeft10.png",
+		"IdleLeft11.png",
+		"IdleLeft12.png"
+	};
+	std::vector<std::string> idleUpFrames =
+	{
+		"IdleUp01.png",
+		"IdleUp02.png",
+		"IdleUp03.png",
+		"IdleUp04.png"
+	};
+	std::vector<std::string> idleDownFrames =
+	{
+		"IdleDown01.png",
+		"IdleDown02.png",
+		"IdleDown03.png",
+		"IdleDown04.png",
+		"IdleDown05.png",
+		"IdleDown06.png",
+		"IdleDown07.png",
+		"IdleDown08.png",
+		"IdleDown09.png",
+		"IdleDown10.png",
+		"IdleDown11.png",
+		"IdleDown12.png"
+	};
+
+	// Load Walking Animations
+	std::vector<std::string> walkRightFrames =
+	{
+		"WalkRight01.png",
+		"WalkRight02.png",
+		"WalkRight03.png",
+		"WalkRight04.png",
+		"WalkRight05.png",
+		"WalkRight06.png"
+	};
+	std::vector<std::string> walkLeftFrames =
+	{
+		"WalkLeft01.png",
+		"WalkLeft02.png",
+		"WalkLeft03.png",
+		"WalkLeft04.png",
+		"WalkLeft05.png",
+		"WalkLeft06.png"
+	};
+	std::vector<std::string> walkUpFrames =
+	{
+		"WalkUp01.png",
+		"WalkUp02.png",
+		"WalkUp03.png",
+		"WalkUp04.png",
+		"WalkUp05.png",
+		"WalkUp06.png"
+	};
+	std::vector<std::string> walkDownFrames =
+	{
+		"WalkDown01.png",
+		"WalkDown02.png",
+		"WalkDown03.png",
+		"WalkDown04.png",
+		"WalkDown05.png",
+		"WalkDown06.png"
+	};
+
+	float idleFrameRate = 0.2f;
+	float walkFrameRate = 0.1f;
+
+	// Idle Animations
+	mIdleRight.Load(idleRightFrames, mPosition, 0.0f, 1.0f, idleFrameRate, true);
+	mIdleLeft.Load(idleLeftFrames, mPosition, 0.0f, 1.0f, idleFrameRate, true);
+	mIdleUp.Load(idleUpFrames, mPosition, 0.0f, 1.0f, idleFrameRate, true);
+	mIdleDown.Load(idleDownFrames, mPosition, 0.0f, 1.0f, idleFrameRate, true);
+
+	// Walk Animations
+	mWalkRight.Load(walkRightFrames, mPosition, 0.0f, 1.0f, walkFrameRate, true);
+	mWalkLeft.Load(walkLeftFrames, mPosition, 0.0f, 1.0f, walkFrameRate, true);
+	mWalkUp.Load(walkUpFrames, mPosition, 0.0f, 1.0f, walkFrameRate, true);
+	mWalkDown.Load(walkDownFrames, mPosition, 0.0f, 1.0f, walkFrameRate, true);
+
+	mCurrentAnim = &mIdleRight;
+	mAnimState = AnimState::IdleRight;
+	mFacingRight = true;
+
 	// Collider Stuff
 	SetRect(mPlayerRect);
 	SetCollidableFilter(ET_PLAYER | ET_PICKUP);
 	mRemoveCollider = false;
 	CollisionManager::Get()->AddCollidable(this);
+}
+
+void Player::SetAnimState(AnimState newState)
+{
+	if (mAnimState != newState)
+	{
+		mAnimState = newState;
+		switch (mAnimState)
+		{
+		case AnimState::WalkRight:
+			mCurrentAnim = &mWalkRight;
+			break;
+		case AnimState::WalkLeft:
+			mCurrentAnim = &mWalkLeft;
+			break;
+		case AnimState::WalkUp:
+			mCurrentAnim = &mWalkUp;
+			break;
+		case AnimState::WalkDown:
+			mCurrentAnim = &mWalkDown;
+			break;
+		case AnimState::IdleRight:
+			mCurrentAnim = &mWalkRight;
+			mFacingRight = true;
+			break;
+		case AnimState::IdleLeft:
+			mCurrentAnim = &mWalkLeft;
+			mFacingRight = false;
+			break;
+		default:
+			break;
+		}
+		mCurrentAnim->SetActive(mPosition, true);
+	}
 }
 
 void Player::Update(float deltaTime)
@@ -53,6 +201,8 @@ void Player::Update(float deltaTime)
 	const float speed = 200.0f;
 	X::Math::Vector2 direction = X::Math::Vector2::Zero();
 	X::Math::Vector2 displacement = X::Math::Vector2::Zero();
+	bool isMoving = false;
+
 	if (X::IsKeyDown(X::Keys::W))
 	{
 		direction.y = -1.0f;
@@ -71,6 +221,7 @@ void Player::Update(float deltaTime)
 	}
 	if (X::Math::MagnitudeSqr(direction) > 0.0f)
 	{
+		isMoving = true;
 		direction = X::Math::Normalize(direction);
 		displacement = direction * speed * deltaTime;
 		X::Math::Vector2 maxDisplacement = displacement;
@@ -93,19 +244,60 @@ void Player::Update(float deltaTime)
 		currentRect.min += mPosition;
 		currentRect.max += mPosition;
 		SetRect(currentRect);
+
+		// Update Animation State
+		if (direction.x > 0.0f)
+		{
+			SetAnimState(AnimState::WalkRight);
+		}
+		else if (direction.x < 0.0f)
+		{
+			SetAnimState(AnimState::WalkLeft);
+		}
+		else if (direction.y < 0.0f)
+		{
+			SetAnimState(AnimState::WalkUp);
+		}
+		else if (direction.y > 0.0f)
+		{
+			SetAnimState(AnimState::WalkDown);
+		}
+	}
+	else
+	{
+		// Idle State
+		if (mFacingRight)
+		{
+			SetAnimState(AnimState::IdleRight);
+		}
+		else
+		{
+			SetAnimState(AnimState::IdleLeft);
+		}
+	}
+
+	// Update current animation
+	if (mCurrentAnim && isMoving)
+	{
+		mCurrentAnim->Update(deltaTime);
 	}
 }
 
 void Player::Render()
 {
-	if (mHealth > 0)
+	if (mHealth > 0 && mCurrentAnim)
 	{
-		X::DrawSprite(mImageId, mPosition);
+		mCurrentAnim->SetPosition(mPosition);
+		mCurrentAnim->Render();
 	}
 }
 
 void Player::Unload()
 {
+	mWalkRight.Unload();
+	mWalkLeft.Unload();
+	mWalkUp.Unload();
+	mWalkDown.Unload();
 }
 
 int Player::GetType() const
