@@ -2,6 +2,7 @@
 
 #include "EnemyManager.h"
 #include "TileMap.h"
+#include "Player.h"
 
 EnemyManager* EnemyManager::mInstance = nullptr;
 
@@ -47,6 +48,10 @@ void EnemyManager::Update(float deltaTime)
 	}
 	for (Enemy* enemy : mEnemies)
 	{
+		if (mPlayer != nullptr)
+		{
+			enemy->SetTarget(mPlayer->GetPosition());
+		}
 		enemy->Update(deltaTime);
 	}
 }
@@ -138,4 +143,9 @@ void EnemyManager::ApplyDamageInArea(const X::Math::Rect& attackRect, int damage
 			enemy->TakeDamage(damage);
 		}
 	}
+}
+
+void EnemyManager::SetPlayer(Player* player)
+{
+	mPlayer = player;
 }

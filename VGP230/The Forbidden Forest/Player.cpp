@@ -407,8 +407,8 @@ bool Player::IsDead() const
 
 void Player::PerformAttack()
 {
-	const float attackRange = 20.0f;
-	const float attackWidth = 25.0f;
+	const float attackRange = 40.0f;
+	const float attackWidth = 45.0f;
 
 	std::cout << "Player Attack!\n";
 
@@ -427,5 +427,5 @@ void Player::PerformAttack()
 	attackRect.top = attackCenter.y - attackWidth * 0.5f;
 	attackRect.bottom = attackCenter.y + attackWidth * 0.5f;
 
-	EnemyManager::Get()->ApplyDamageInArea(attackRect, 15);
+	EnemyManager::Get()->ApplyDamageInArea(attackRect, 20);
 }

@@ -32,6 +32,7 @@ void GameController::Load()
 	TileMap::Get()->Load();
 	EnemyManager::Get()->Load();
 	mPlayer.Load();
+	EnemyManager::Get()->SetPlayer(&mPlayer);
 }
 
 void GameController::Update(float deltaTime)

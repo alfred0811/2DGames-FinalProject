@@ -50,13 +50,13 @@ void Enemy::Update(float deltaTime)
 	}
 
 	const float speed = 70.0f;
-	const float offsetDistance = 200.0f;
+	/*const float offsetDistance = 200.0f;
 	mTargetPointUpdate -= deltaTime;
 	if (mTargetPointUpdate <= 0.0f || X::Math::Vector2::SqrMagnitude(mTargetPoint - mPosition) <= 100.0f)
 	{
 		mTargetPoint = mCenterPoint + (X::RandomUnitCircle() * offsetDistance);
 		mTargetPointUpdate = X::RandomFloat(1.0f, 5.0f);
-	}
+	}*/
 
 	X::Math::Vector2 direction = X::Math::Normalize(mTargetPoint - mPosition);
 	if (X::Math::Vector2::SqrMagnitude(direction) > 0.0f)
@@ -139,6 +139,11 @@ void Enemy::TakeDamage(int damage)
 	}
 }
 
+void Enemy::SetTarget(const X::Math::Vector2& targetPoint)
+{
+	mTargetPoint = targetPoint;
+}
+
 void Enemy::SetActive(const X::Math::Vector2& position, int health)
 {
 	mPosition = position;
@@ -150,7 +155,7 @@ void Enemy::SetActive(const X::Math::Vector2& position, int health)
 	X::Math::Rect currentRect = mEnemyRect;
 	currentRect.min += mPosition;
 	currentRect.max += mPosition;
-	SetRect(mEnemyRect);
+	SetRect(currentRect);
 	SetCollidableFilter(ET_ENEMY);
 
 	CollisionManager::Get()->AddCollidable(this);

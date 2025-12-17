@@ -2,6 +2,8 @@
 
 #include "Enemy.h"
 
+class Player;
+
 class EnemyManager : public Entity
 {
 public:
@@ -15,6 +17,7 @@ public:
 
 	void SpawnEnemies(int amount);
 	void ApplyDamageInArea(const X::Math::Rect& attackRect, int damage);
+	void SetPlayer(Player* player);
 
 private:
 	EnemyManager();
@@ -23,5 +26,6 @@ private:
 	std::vector<Enemy*> mEnemies;
 	int mNextAvailableIndex;
 	float mSpawnTimer;
-	const float mSpawnInterval = 5.0f;
+	const float mSpawnInterval = 1.5f;
+	Player* mPlayer = nullptr;
 };
