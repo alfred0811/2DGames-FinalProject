@@ -115,7 +115,7 @@ void EnemyManager::SpawnEnemies(int amount)
 			{
 				int randIndex = X::Random(0, walkableTiles.size() - 1);
 				Tile* randomTile = walkableTiles[randIndex];
-				enemy->SetActive(randomTile->GetPosition(), 10);
+				enemy->SetActive(randomTile->GetPosition(), 35);
 				if (randIndex < walkableTiles.size() - 1)
 				{
 					Tile* temp = walkableTiles[walkableTiles.size() - 1];

@@ -425,5 +425,5 @@ void Player::PerformAttack()
 	attackRect.top = attackCenter.y - attackWidth * 0.5f;
 	attackRect.bottom = attackCenter.y + attackWidth * 0.5f;
 
-	EnemyManager::Get()->ApplyDamageInArea(attackRect, 10);
+	EnemyManager::Get()->ApplyDamageInArea(attackRect, 15);
 }
