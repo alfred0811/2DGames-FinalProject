@@ -184,7 +184,7 @@ void Player::Load()
 
 	// Collider Stuff
 	SetRect(mPlayerRect);
-	SetCollidableFilter(ET_PLAYER | ET_PICKUP);
+	SetCollidableFilter(ET_PLAYER | ET_ENEMY | ET_PICKUP);
 	mRemoveCollider = false;
 	CollisionManager::Get()->AddCollidable(this);
 }
@@ -409,6 +409,8 @@ void Player::PerformAttack()
 {
 	const float attackRange = 20.0f;
 	const float attackWidth = 25.0f;
+
+	std::cout << "Player Attack!\n";
 
 	X::Math::Vector2 attackDirection = mFacingDirection;
 	if (X::Math::MagnitudeSqr(attackDirection) <= 0.0f)

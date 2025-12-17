@@ -26,7 +26,7 @@ State StartState::Update(float deltaTime)
 void StartState::Render()
 {
 	const float textSize = 100.0f;
-	const char* text = "Start Screen \n <Press Enter>";
+	const char* text = "Controls \n WASD to Move \n <Press Enter>";
 	float textWidth = X::GetTextWidth(text, textSize);
 	float screenX = (X::GetScreenWidth() - textWidth) * 0.5f;
 	float screenY = X::GetScreenHeight() * 0.5f;

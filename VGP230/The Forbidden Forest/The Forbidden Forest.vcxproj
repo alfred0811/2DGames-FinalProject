@@ -142,7 +142,6 @@
     <ClCompile Include="StartState.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="WaveManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +167,6 @@
     <ClInclude Include="StartState.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
-    <ClInclude Include="WaveManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\X\X.vcxproj">

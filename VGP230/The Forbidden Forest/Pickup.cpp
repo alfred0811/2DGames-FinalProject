@@ -17,7 +17,7 @@ Pickup::~Pickup()
 
 void Pickup::Load()
 {
-	mImageId = X::LoadTexture("qwark.png");
+	mImageId = X::LoadTexture("carrot.png");
 	mIsActive = false;
 	mRemoveCollider = false;
 }
