@@ -8,6 +8,7 @@ EnemyManager* EnemyManager::mInstance = nullptr;
 EnemyManager::EnemyManager()
 	: Entity()
 	, mNextAvailableIndex(0)
+	, mSpawnTimer(0.0f)
 {
 }
 
@@ -33,13 +34,16 @@ void EnemyManager::Load()
 		newEnemy->Load();
 		mEnemies.push_back(newEnemy);
 	}
+	mSpawnTimer = 0.0f;
 }
 
 void EnemyManager::Update(float deltaTime)
 {
-	if (X::IsKeyPressed(X::Keys::RCONTROL))
+	mSpawnTimer -= deltaTime;
+	if (mSpawnTimer <= 0.0f)
 	{
-		SpawnEnemies(3);
+		SpawnEnemies(1);
+		mSpawnTimer = mSpawnInterval;
 	}
 	for (Enemy* enemy : mEnemies)
 	{
@@ -70,6 +74,10 @@ void EnemyManager::SpawnEnemies(int amount)
 {
 	std::vector<Tile*> walkableTiles;
 	TileMap::Get()->ObtainAllWalkableTiles(walkableTiles);
+	if (walkableTiles.empty())
+	{
+		return;
+	}
 	for (Enemy* enemy : mEnemies)
 	{
 		if (enemy->IsActive())

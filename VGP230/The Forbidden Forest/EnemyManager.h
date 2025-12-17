@@ -22,4 +22,6 @@ private:
 
 	std::vector<Enemy*> mEnemies;
 	int mNextAvailableIndex;
+	float mSpawnTimer;
+	const float mSpawnInterval = 7.0f;
 };

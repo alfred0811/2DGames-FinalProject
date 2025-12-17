@@ -23,7 +23,7 @@ Enemy::~Enemy()
 
 void Enemy::Load()
 {
-	mImageId = X::LoadTexture("mushroom.png");
+	mImageId = X::LoadTexture("Slime01.png");
 	mTargetPointUpdate = 0.0f;
 	mHealth = -1;
 	mRemoveCollider = false;
