@@ -162,8 +162,6 @@ void Player::Load()
 		"AttackDown05.png"
 	};
 
-	// Load Attack Animations
-
 	float idleFrameRate = 0.2f;
 	float walkFrameRate = 0.1f;
 	float attackFrameRate = 0.1f;
@@ -339,6 +337,10 @@ void Player::Render()
 
 void Player::Unload()
 {
+	mIdleRight.Unload();
+	mIdleLeft.Unload();
+	mIdleUp.Unload();
+	mIdleDown.Unload();
 	mWalkRight.Unload();
 	mWalkLeft.Unload();
 	mWalkUp.Unload();
@@ -405,8 +407,8 @@ bool Player::IsDead() const
 
 void Player::PerformAttack()
 {
-	const float attackRange = 40.0f;
-	const float attackWidth = 45.0f;
+	const float attackRange = 20.0f;
+	const float attackWidth = 25.0f;
 
 	X::Math::Vector2 attackDirection = mFacingDirection;
 	if (X::Math::MagnitudeSqr(attackDirection) <= 0.0f)

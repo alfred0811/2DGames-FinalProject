@@ -54,9 +54,6 @@ private:
 	};
 
 	void SetAnimState(AnimState newState);
-	void Attack();
-	void UpdateAttack(float deltaTime);
-	X::Math::Rect GetAttackHitbox() const;
 
 	X::TextureId mImageId;
 	X::Math::Vector2 mPosition;
@@ -74,6 +71,10 @@ private:
 	AnimSeperateImages mWalkLeft;
 	AnimSeperateImages mWalkUp;
 	AnimSeperateImages mWalkDown;
+	AnimSeperateImages mAttackRight;
+	AnimSeperateImages mAttackLeft;
+	AnimSeperateImages mAttackUp;
+	AnimSeperateImages mAttackDown;
 	AnimSeperateImages* mCurrentAnim;
 	AnimState mAnimState;
 	bool mFacingRight;
