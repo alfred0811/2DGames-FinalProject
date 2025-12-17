@@ -1,3 +1,5 @@
+#include <XEngine.h>
+
 #include "EnemyManager.h"
 #include "TileMap.h"
 
@@ -115,6 +117,17 @@ void EnemyManager::SpawnEnemies(int amount)
 				walkableTiles.pop_back();
 				break;
 			}
+		}
+	}
+}
+
+void EnemyManager::ApplyDamageInArea(const X::Math::Rect& attackRect, int damage)
+{
+	for (Enemy* enemy : mEnemies)
+	{
+		if (enemy->IsActive() && X::Math::Intersect(attackRect, enemy->GetRect()))
+		{
+			enemy->TakeDamage(damage);
 		}
 	}
 }

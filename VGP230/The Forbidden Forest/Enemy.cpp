@@ -124,6 +124,21 @@ bool Enemy::IsActive() const
 	return mHealth > 0;
 }
 
+void Enemy::TakeDamage(int damage)
+{
+	if (!IsActive())
+	{
+		return;
+	}
+
+	mHealth -= damage;
+	if (mHealth <= 0)
+	{
+		mHealth = -1;
+		mRemoveCollider = true;
+	}
+}
+
 void Enemy::SetActive(const X::Math::Vector2& position, int health)
 {
 	mPosition = position;

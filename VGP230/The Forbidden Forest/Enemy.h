@@ -22,6 +22,7 @@ public:
 
 	bool IsActive() const;
 	void SetActive(const X::Math::Vector2& position, int health);
+	void TakeDamage(int damage);
 
 private:
 	X::TextureId mImageId;

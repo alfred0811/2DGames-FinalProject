@@ -38,10 +38,25 @@ private:
 		WalkRight,
 		WalkLeft,
 		WalkUp,
-		WalkDown
+		WalkDown,
+		AttackRight,
+		AttackLeft,
+		AttackUp,
+		AttackDown
+	};
+
+	enum class FacingDirection
+	{
+		Right,
+		Left,
+		Up,
+		Down
 	};
 
 	void SetAnimState(AnimState newState);
+	void Attack();
+	void UpdateAttack(float deltaTime);
+	X::Math::Rect GetAttackHitbox() const;
 
 	X::TextureId mImageId;
 	X::Math::Vector2 mPosition;
@@ -62,4 +77,7 @@ private:
 	AnimSeperateImages* mCurrentAnim;
 	AnimState mAnimState;
 	bool mFacingRight;
+	X::Math::Vector2 mFacingDirection;
+
+	void PerformAttack();
 };

@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "CollisionManager.h"
+#include "EnemyManager.h"
 
 Player::Player()
 	: Entity()
@@ -12,6 +13,7 @@ Player::Player()
 	, mCurrentAnim(nullptr)
 	, mAnimState(AnimState::IdleRight)
 	, mFacingRight(true)
+	, mFacingDirection(X::Math::Vector2::XAxis())
 {
 }
 
@@ -23,6 +25,7 @@ void Player::Load()
 {
 	mImageId = X::LoadTexture("Walk3_Right.png");
 	mHealth = 100;
+	mFacingDirection = X::Math::Vector2::XAxis();
 
 	const Tile* safeTile = TileMap::Get()->GetFirstWalkableTile();
 	mPosition = safeTile->GetPosition();
@@ -125,9 +128,45 @@ void Player::Load()
 		"WalkDown05.png",
 		"WalkDown06.png"
 	};
+	std::vector<std::string> attackRightFrames =
+	{
+		"AttackRight01.png",
+		"AttackRight02.png",
+		"AttackRight03.png",
+		"AttackRight04.png",
+		"AttackRight05.png"
+	};
+
+	std::vector<std::string> attackLeftFrames =
+	{
+		"AttackLeft01.png",
+		"AttackLeft02.png",
+		"AttackLeft03.png",
+		"AttackLeft04.png",
+		"AttackLeft05.png"
+	};
+	std::vector<std::string> attackUpFrames =
+	{
+		"AttackUp01.png",
+		"AttackUp02.png",
+		"AttackUp03.png",
+		"AttackUp04.png",
+		"AttackUp05.png"
+	};
+	std::vector<std::string> attackDownFrames =
+	{
+		"AttackDown01.png",
+		"AttackDown02.png",
+		"AttackDown03.png",
+		"AttackDown04.png",
+		"AttackDown05.png"
+	};
+
+	// Load Attack Animations
 
 	float idleFrameRate = 0.2f;
 	float walkFrameRate = 0.1f;
+	float attackFrameRate = 0.1f;
 
 	// Idle Animations
 	mIdleRight.Load(idleRightFrames, mPosition, 0.0f, 1.0f, idleFrameRate, true);
@@ -223,6 +262,7 @@ void Player::Update(float deltaTime)
 	{
 		isMoving = true;
 		direction = X::Math::Normalize(direction);
+		mFacingDirection = direction;
 		displacement = direction * speed * deltaTime;
 		X::Math::Vector2 maxDisplacement = displacement;
 		X::Math::Rect currentRect = mPlayerRect;
@@ -274,6 +314,11 @@ void Player::Update(float deltaTime)
 		{
 			SetAnimState(AnimState::IdleLeft);
 		}
+	}
+
+	if (X::IsKeyPressed(X::Keys::F))
+	{
+		PerformAttack();
 	}
 
 	// Update current animation
@@ -356,4 +401,27 @@ int Player::GetHealth() const
 bool Player::IsDead() const
 {
 	return mHealth <= 0;
+}
+
+void Player::PerformAttack()
+{
+	const float attackRange = 40.0f;
+	const float attackWidth = 45.0f;
+
+	X::Math::Vector2 attackDirection = mFacingDirection;
+	if (X::Math::MagnitudeSqr(attackDirection) <= 0.0f)
+	{
+		attackDirection = mFacingRight ? X::Math::Vector2::XAxis() : -X::Math::Vector2::XAxis();
+	}
+
+	attackDirection = X::Math::Normalize(attackDirection);
+	X::Math::Vector2 attackCenter = mPosition + attackDirection * attackRange;
+
+	X::Math::Rect attackRect;
+	attackRect.left = attackCenter.x - attackWidth * 0.5f;
+	attackRect.right = attackCenter.x + attackWidth * 0.5f;
+	attackRect.top = attackCenter.y - attackWidth * 0.5f;
+	attackRect.bottom = attackCenter.y + attackWidth * 0.5f;
+
+	EnemyManager::Get()->ApplyDamageInArea(attackRect, 10);
 }

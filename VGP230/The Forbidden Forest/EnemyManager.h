@@ -14,6 +14,7 @@ public:
 	void Unload() override;
 
 	void SpawnEnemies(int amount);
+	void ApplyDamageInArea(const X::Math::Rect& attackRect, int damage);
 
 private:
 	EnemyManager();
